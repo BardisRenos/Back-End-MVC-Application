@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -87,7 +86,6 @@ class CandidateControllerTest {
     @BeforeEach
     public void init() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-        MockitoAnnotations.initMocks(this);
         this.candidateController = new CandidateController(this.candidateServiceImpl);
     }
 
@@ -209,9 +207,12 @@ class CandidateControllerTest {
                 .andExpect(jsonPath("$.dob", is(candidateDTO.getDob())))
                 .andReturn();
 
-        assertNotNull(candidateDTO);
-        assertEquals("Bardis", candidateDTO.getLastName());
-        assertEquals("Renos", candidateDTO.getName());
+        String jsonResponse = mvcResult.getResponse().getContentAsString();
+        CandidateDTO candidateDTORes = new ObjectMapper().readValue(jsonResponse, CandidateDTO.class);
+
+        assertNotNull(candidateDTORes);
+        assertEquals("Renos", candidateDTORes.getName());
+        assertEquals("Bardis", candidateDTORes.getLastName());
     }
 
     @Test
