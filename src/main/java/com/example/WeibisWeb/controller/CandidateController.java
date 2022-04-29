@@ -2,7 +2,6 @@ package com.example.WeibisWeb.controller;
 
 import com.example.WeibisWeb.dto.CandidateDTO;
 import com.example.WeibisWeb.exception.CandidateNotFoundException;
-import com.example.WeibisWeb.resources.Candidate;
 import com.example.WeibisWeb.service.CandidateServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,7 +44,7 @@ public class CandidateController {
 
     /**
      * Insert a new Candidate entity
-     * @param candidate the candidate object
+     * @param candidateDTO the candidate object
      * @return A candidateDTO object
      */
     @PostMapping("/candidate")
