@@ -1,0 +1,50 @@
+version: "3"
+services:
+  # PostgreSQL Database for the application
+  PostgreSQL:
+    image: postgres:latest
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - DATABASE_HOST=127.0.0.1
+      - APP_DB_USER=postgres
+      - APP_DB_PASS=postgres
+      - APP_DB_NAME=test_db
+    ports:
+      - "5432:5432"
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+  # Back-end Spring Boot Application
+  springboot-docker-container:
+    image: springboot-docker-container
+    container_name: springboot-docker-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - PostgreSQL
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: [ "CMD-SHELL"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - DB_SERVER=PostgreSQL
+      - POSTGRES_DB=test_db
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/test_db?autoReconnect=true&useSSL=false
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    links:
+      - PostgreSQL
