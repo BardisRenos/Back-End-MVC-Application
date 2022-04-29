@@ -51,7 +51,7 @@ public class UserController {
     /**
      * Retrieve User by Id
      * @param id The id of the User
-     * @return A list of of UserDTOs
+     * @return A list of UserDTOs
      */
     @GetMapping(value = "/users/id/{id}")
     @ResponseStatus(HttpStatus.OK)

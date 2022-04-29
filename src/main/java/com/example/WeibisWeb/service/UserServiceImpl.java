@@ -8,6 +8,8 @@ import com.example.WeibisWeb.exception.UserNotFoundException;
 import com.example.WeibisWeb.resources.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +42,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A list of UserDTO
      */
     @Override
+    @Cacheable("users")
     public List<UserDTO> getAllUsers() {
+        log.info("The method is called");
         return userRepository.findAll().stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
     }
 
@@ -84,6 +88,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A UserDTO object
      */
     @Override
+//    @CacheEvict(value = "users", allEntries = true)
     public UserNoPassDTO registerUser(UserDTO userDTO) {
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = UserMapper.convertAllUsersDtoTOEntity(userDTO);
