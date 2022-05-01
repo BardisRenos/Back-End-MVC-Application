@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class UserNoPassDTO {
+public class UserNoPassDTO implements Serializable {
+
     private UUID userId;
     private String firstName;
     private String username;

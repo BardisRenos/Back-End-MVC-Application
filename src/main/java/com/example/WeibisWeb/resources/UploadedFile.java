@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Table(name = "uploaded_files")
-public class UploadedFile {
+public class UploadedFile implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
