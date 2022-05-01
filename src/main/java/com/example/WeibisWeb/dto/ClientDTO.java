@@ -2,6 +2,7 @@ package com.example.WeibisWeb.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -12,7 +13,7 @@ import java.util.UUID;
 @Builder
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class ClientDTO {
+public class ClientDTO implements Serializable {
 
     private UUID clientId;
     private String companyName;

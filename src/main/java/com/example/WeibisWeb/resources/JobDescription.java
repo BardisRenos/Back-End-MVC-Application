@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "job_descriptions")
-public class JobDescription {
+public class JobDescription implements Serializable {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -66,6 +67,7 @@ public class JobDescription {
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     private List<Candidate> candidates;
 
+    @SuppressWarnings("squid:S00107") // Too many parameters. Should be OK.
     public JobDescription(UUID jobDescriptionsId, String companyName, String title, String location, String description, String programmingLanguage, String databaseName, String framework, String level, String isOpen, Integer numberNeeded) {
         this.jobDescriptionsId = jobDescriptionsId;
         this.companyName = companyName;

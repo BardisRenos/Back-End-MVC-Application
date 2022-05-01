@@ -8,6 +8,7 @@ import com.example.WeibisWeb.exception.UserNotFoundException;
 import com.example.WeibisWeb.resources.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +33,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = {"Users"})
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A list of UserDTO
      */
     @Override
-    @Cacheable("users")
+    @Cacheable(value = "Users")
     public List<UserDTO> getAllUsers() {
         log.info("The method is called");
         return userRepository.findAll().stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A UserDTO Entity
      */
     @Override
+    @Cacheable(value = "Users", key = "'UsersCache'+#id")
     public UserDTO getUserById(UUID id) throws UserNotFoundException {
         return userRepository.findByUserId(id).map(UserMapper::convertAllUsersEntityToDTO).orElseThrow(()->new UserNotFoundException(String.format("The User was not found with ID: %s", id)));
     }
