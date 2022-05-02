@@ -6,12 +6,14 @@ import com.example.WeibisWeb.dto.ClientJobsDTO;
 import com.example.WeibisWeb.dtoMapper.ClientCandidateMapper;
 import com.example.WeibisWeb.dtoMapper.ClientMapper;
 import com.example.WeibisWeb.exception.ClientNotFoundException;
+import com.example.WeibisWeb.resources.Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -128,4 +130,49 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientJobsDTO> getClientsByNameAndStatus(String companyName, String status) {
         return clientRepository.findByCompanyNameAndStatus(companyName, status).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
+
+    /**
+     * Updating the Client with new data by giving the id of the client
+     * @param clientDTO the clientDTO object
+     * @param id The id of the Client
+     * @return A ClientDTO object
+     * @throws ClientNotFoundException
+     */
+    @Override
+    public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) throws ClientNotFoundException {
+        Client clientEntity = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
+
+        return clientRepository.findById(id).map(
+                client -> {
+                    client.setClientId(clientEntity.getClientId());
+                    client.setCompanyName(clientEntity.getCompanyName());
+                    client.setSector(clientEntity.getSector());
+                    client.setCity(clientEntity.getCity());
+                    client.setCountry(clientEntity.getCountry());
+                    client.setSize(clientEntity.getSize());
+                    Client clientRes = clientRepository.save(client);
+                    return ClientMapper.convertAllClientEntityToDTO(clientRes);
+                }).orElseGet(()-> { clientDTO.setClientId(id);
+                    Client client = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
+                    client = clientRepository.save(client);
+                    return  ClientMapper.convertAllClientEntityToDTO(client);
+                });
+    }
+
+    /**
+     * Delete Client by giving an id number
+     * @param id The id number of the Client
+     * @return A String which indicates the entity id deleted
+     * @throws ClientNotFoundException
+     */
+    @Override
+    public String deleteById(UUID id) throws ClientNotFoundException {
+        Client clientRes = clientRepository.findById(id).filter(client -> client.getClientId().equals(id)).orElseThrow(()-> new ClientNotFoundException(String.format("The Client was not found with ID: %s", id)));
+        if(Objects.nonNull(clientRes.getClientId())) {
+            clientRepository.deleteById(clientRes.getClientId());
+            return "The Client is deleted successfully";
+        }
+        return "Not deleted";
+    }
+
 }

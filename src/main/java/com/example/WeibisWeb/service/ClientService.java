@@ -22,4 +22,6 @@ public interface ClientService {
     List<ClientJobsDTO> getClientsByNameAndProgrammingLanguage(String companyName, String programmingLanguage);
     List<ClientJobsDTO> getClientsByNameAndProgrammingLanguageAndLocation(String companyName, String programmingLanguage, String location);
     List<ClientJobsDTO> getClientsByNameAndStatus(String companyName, String status);
+    ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) throws ClientNotFoundException;
+    String deleteById(UUID id) throws ClientNotFoundException;
 }
