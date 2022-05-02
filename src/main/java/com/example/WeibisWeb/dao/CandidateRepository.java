@@ -13,7 +13,7 @@ import java.util.UUID;
  * The Repository layer of Candidate
  */
 @Repository
-public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
+public interface CandidateRepository extends JpaRepository<Candidate, UUID> {
 
     /**
      * Retrieve the candidates by a given ID
