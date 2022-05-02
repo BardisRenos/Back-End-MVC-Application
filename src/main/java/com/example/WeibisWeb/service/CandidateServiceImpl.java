@@ -112,12 +112,13 @@ public class CandidateServiceImpl implements CandidateService {
     /**
      * Delete candidate by giving an id number
      * @param id The id of the Candidate
-     * @return A String that indicates the entity id deleted
+     * @return A String which indicates the entity id deleted
+     * @throws CandidateNotFoundException
      */
     @Override
     public String deleteById(UUID id) throws CandidateNotFoundException {
         Candidate candidateRes = candidateRepository.findByCandidateId(id).filter(candidate -> candidate.getCandidateId().equals(id)).orElseThrow(()-> new CandidateNotFoundException(String.format("The Candidate was not found with ID: %s", id)));
-        if(Objects.nonNull(candidateRes.getCandidateId())){
+        if(Objects.nonNull(candidateRes.getCandidateId())) {
             candidateRepository.deleteById(candidateRes.getCandidateId());
             return "The Candidate is deleted successfully";
         }

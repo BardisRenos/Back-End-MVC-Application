@@ -53,6 +53,7 @@ public class ClientController {
      * @return A ClientDTO class
      */
     @GetMapping(value = "/client")
+    @ResponseStatus(HttpStatus.OK)
     public Object getClientById(@RequestParam(value = "id") UUID id) throws ClientNotFoundException {
         return clientServiceImpl.getClientById(id);
     }
@@ -139,5 +140,17 @@ public class ClientController {
     @ResponseStatus(HttpStatus.OK)
     public List<ClientJobsDTO> getClientsByCompanyNameAndStatus(@PathVariable(value = "jobsByCompanyName") String companyName, @PathVariable(value = "status") String status) {
         return clientServiceImpl.getClientsByNameAndStatus(companyName.toLowerCase(Locale.ROOT), status.toLowerCase(Locale.ROOT));
+    }
+
+    @PutMapping(value = "/clients/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientDTO replaceClient(@RequestBody ClientDTO clientDTO, @PathVariable(value = "id") UUID id) throws ClientNotFoundException {
+        return clientServiceImpl.getReplaceClient(clientDTO, id);
+    }
+
+    @DeleteMapping(value = "/client/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteClient(@PathVariable(value = "id") UUID id) throws ClientNotFoundException {
+        return clientServiceImpl.deleteById(id);
     }
 }

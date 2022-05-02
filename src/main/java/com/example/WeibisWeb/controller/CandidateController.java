@@ -2,7 +2,6 @@ package com.example.WeibisWeb.controller;
 
 import com.example.WeibisWeb.dto.CandidateDTO;
 import com.example.WeibisWeb.exception.CandidateNotFoundException;
-import com.example.WeibisWeb.resources.Candidate;
 import com.example.WeibisWeb.service.CandidateServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -93,6 +92,7 @@ public class CandidateController {
      * @param id The id of the Candidate
      */
     @DeleteMapping(value = "/candidate/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public String deleteCandidate(@PathVariable(value = "id") UUID id) throws CandidateNotFoundException {
         return candidateServiceImpl.deleteById(id);
     }
