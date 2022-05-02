@@ -2,7 +2,6 @@ package com.example.WeibisWeb.service;
 
 import com.example.WeibisWeb.dto.CandidateDTO;
 import com.example.WeibisWeb.exception.CandidateNotFoundException;
-import com.example.WeibisWeb.resources.Candidate;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,5 +16,6 @@ public interface CandidateService {
     CandidateDTO registerCandidate(CandidateDTO candidateDTO);
     List<CandidateDTO> getCandidatesByLastName(String lastName);
     List<CandidateDTO> getCandidateByName(String firstName);
-
+    CandidateDTO getReplaceCandidate(CandidateDTO candidateDTO, UUID uuid) throws CandidateNotFoundException;
+    Object deleteById(UUID id) throws CandidateNotFoundException;
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
  * Repository layer of File Uploaded
  */
 @Repository
-public interface FileUpLoadedRepository extends JpaRepository<UploadedFile, String> {
+public interface FileUpLoadedRepository extends JpaRepository<UploadedFile, UUID> {
 
     /**
      * Retrieve Uploaded file by a given ID
