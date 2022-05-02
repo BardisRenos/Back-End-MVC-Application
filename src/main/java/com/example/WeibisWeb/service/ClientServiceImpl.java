@@ -136,10 +136,9 @@ public class ClientServiceImpl implements ClientService {
      * @param clientDTO the clientDTO object
      * @param id The id of the Client
      * @return A ClientDTO object
-     * @throws ClientNotFoundException
      */
     @Override
-    public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) throws ClientNotFoundException {
+    public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) {
         Client clientEntity = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
 
         return clientRepository.findById(id).map(
@@ -162,7 +161,7 @@ public class ClientServiceImpl implements ClientService {
     /**
      * Delete Client by giving an id number
      * @param id The id number of the Client
-     * @return A String which indicates the entity id deleted
+     * @return A String which indicates the entity id is deleted
      * @throws ClientNotFoundException
      */
     @Override

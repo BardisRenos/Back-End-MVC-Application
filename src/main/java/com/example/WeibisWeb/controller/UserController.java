@@ -123,4 +123,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new JwtResponse(jwt));
     }
 
+    /**
+     * Updating the User with new data by giving the id of the User
+     * @param id The id of the User
+     * @return UserNoPassDTO class
+     * @throws UserNotFoundException
+     */
+    @PutMapping(value = "/users/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserNoPassDTO replaceUser(@RequestBody UserNoPassDTO userNoPassDTO, @PathVariable(value = "id") UUID id) throws UserNotFoundException {
+        return userServiceImpl.replaceUser(userNoPassDTO, id);
+    }
+
+    @DeleteMapping(value = "/user/{id}")
+    public String deleteUser(@PathVariable(value = "id") UUID id) throws UserNotFoundException {
+        return userServiceImpl.deleteById(id);
+    }
+
 }

@@ -142,12 +142,24 @@ public class ClientController {
         return clientServiceImpl.getClientsByNameAndStatus(companyName.toLowerCase(Locale.ROOT), status.toLowerCase(Locale.ROOT));
     }
 
+    /**
+     * Replace the Client with a new data by giving the id of the Client
+     * @param clientDTO  The clientDTO object
+     * @param id The id number of the Client
+     * @return A ClientDTO class
+     */
     @PutMapping(value = "/clients/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClientDTO replaceClient(@RequestBody ClientDTO clientDTO, @PathVariable(value = "id") UUID id) throws ClientNotFoundException {
+    public ClientDTO replaceClient(@RequestBody ClientDTO clientDTO, @PathVariable(value = "id") UUID id) {
         return clientServiceImpl.getReplaceClient(clientDTO, id);
     }
 
+    /**
+     * Delete the Client with an id number
+     * @param id The id number of the User
+     * @return A string which indicates the entity id is deleted
+     * @throws ClientNotFoundException
+     */
     @DeleteMapping(value = "/client/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteClient(@PathVariable(value = "id") UUID id) throws ClientNotFoundException {

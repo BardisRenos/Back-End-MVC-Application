@@ -41,4 +41,14 @@ public class UserMapper {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(userEntity, UserNoPassDTO.class);
     }
+
+    /**
+     *
+     * @param userNoPassDTO
+     * @return
+     */
+    public static User convertUserNoPassDTOToEntity(UserNoPassDTO userNoPassDTO) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(userNoPassDTO, User.class);
+    }
 }
