@@ -9,13 +9,13 @@ import com.example.WeibisWeb.resources.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * The Service layer of the User
@@ -119,4 +118,45 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorityList);
     }
 
+    /**
+     * Updating the User with new data by giving the id of the User
+     * @param userNoPassDTO The userNoPassDTO object
+     * @param id The id number of the User
+     * @return A UserNoPassDTO class
+     */
+    @Override
+    public UserNoPassDTO replaceUser(UserNoPassDTO userNoPassDTO, UUID id) {
+        User userEntity = UserMapper.convertUserNoPassDTOToEntity(userNoPassDTO);
+
+        return userRepository.findByUserId(id).map(
+                user -> {
+                    user.setUserId(userEntity.getUserId());
+                    user.setFirstName(userEntity.getFirstName());
+                    user.setUsername(userEntity.getUsername());
+                    user.setLastName(userEntity.getLastName());
+                    user.setEmail(userEntity.getEmail());
+                    user.setRole(userEntity.getRole());
+                    User userRes = userRepository.save(user);
+                    return UserMapper.convertUserEntityIntoDTO(userRes);
+                }).orElseGet(()-> { userNoPassDTO.setUserId(id);
+                    User user = UserMapper.convertUserNoPassDTOToEntity(userNoPassDTO);
+                    user = userRepository.save(user);
+                    return UserMapper.convertUserEntityIntoDTO(user);
+                });
+    }
+
+    /**
+     * Delete the User by giving an id number
+     * @param id The id number of the User
+     * @return A String which indicates the entity id is deleted
+     */
+    @Override
+    public String deleteById(UUID id) throws UserNotFoundException {
+        User userRes = userRepository.findByUserId(id).filter(user -> user.getUserId().equals(id)).orElseThrow(()->new UserNotFoundException(String.format("The User was not found with ID: %s", id)));
+        if (Objects.nonNull(userRes.getUserId())) {
+            userRepository.deleteById(userRes.getUserId());
+            return "The User is deleted successfully";
+        }
+        return "Not deleted";
+    }
 }
