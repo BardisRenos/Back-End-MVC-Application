@@ -9,6 +9,7 @@ import com.example.WeibisWeb.resources.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -66,6 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A list of UserNoPasswordDTO Entity
      */
     @Override
+    @Cacheable(value = "Users", key = "'UsersCache'+#lastName")
     public List<UserDTO> getUserByLastName(String lastName) {
         return userRepository.findByLastName(lastName).stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
     }
@@ -76,10 +78,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A list of User Entity
      */
     @Override
+    @Cacheable(value = "Users", key = "'UsersCache'+#firstName")
     public List<UserDTO> getUserByFirstName(String firstName) {
         return userRepository.findByFirstName(firstName).stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
     }
 
+    /**
+     * Retrieve the User entity by a given email
+     * @param email The email of a User
+     * @return A UserDTO Entity
+     */
+    @Override
     public UserDTO getUserByEmail(String email) {
         return userRepository.findByEmail(email).map(UserMapper::convertAllUsersEntityToDTO).orElseThrow(()-> new UsernameNotFoundException(String.format("The User was not found with the email: %s", email)));
     }
@@ -90,7 +99,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A UserDTO object
      */
     @Override
-//    @CacheEvict(value = "users", allEntries = true)
+    @CacheEvict(value = "users", allEntries = true)
     public UserNoPassDTO registerUser(UserDTO userDTO) {
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = UserMapper.convertAllUsersDtoTOEntity(userDTO);

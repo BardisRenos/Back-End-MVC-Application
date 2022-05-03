@@ -9,6 +9,8 @@ import com.example.WeibisWeb.exception.ClientNotFoundException;
 import com.example.WeibisWeb.resources.Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@CacheConfig(cacheNames = {"Clients"})
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
@@ -33,6 +36,7 @@ public class ClientServiceImpl implements ClientService {
      * @return A list of ClientDTO
      */
     @Override
+    @Cacheable(value = "Clients")
     public List<ClientDTO> getAllClient() {
         return clientRepository.findAll().stream().map(ClientMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
@@ -52,6 +56,7 @@ public class ClientServiceImpl implements ClientService {
      * @return A ClientDTO class
      */
     @Override
+    @Cacheable(value = "Clients", key = "'Clients'+#id")
     public ClientDTO getClientById(UUID id) throws ClientNotFoundException {
         return clientRepository.findById(id).map(ClientMapper::convertAllClientEntityToDTO).orElseThrow(()-> new ClientNotFoundException(String.format("The Client was not found with ID: %s", id)));
     }
@@ -62,6 +67,7 @@ public class ClientServiceImpl implements ClientService {
      * @return A ClientDTO class
      */
     @Override
+    @Cacheable(value = "Clients", key = "'Clients'+#companyName")
     public List<ClientDTO> getClientByName(String companyName) {
         return clientRepository.findByCompanyName(companyName).stream().map(ClientMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
@@ -72,6 +78,7 @@ public class ClientServiceImpl implements ClientService {
      * @return A list of ClientDTO class
      */
     @Override
+    @Cacheable(value = "Clients", key = "'Clients'+#city")
     public List<ClientDTO> getClientsByCity(String city) {
         return clientRepository.findByCity(city).stream().map(ClientMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
@@ -162,7 +169,7 @@ public class ClientServiceImpl implements ClientService {
      * Delete Client by giving an id number
      * @param id The id number of the Client
      * @return A String which indicates the entity id is deleted
-     * @throws ClientNotFoundException
+     * @throws ClientNotFoundException The exception that throws
      */
     @Override
     public String deleteById(UUID id) throws ClientNotFoundException {
