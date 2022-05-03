@@ -36,6 +36,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -58,7 +59,7 @@ class ClientControllerTest {
     @MockBean
     private UserServiceImpl userService;
 
-    @InjectMocks
+    @Autowired
     private ClientController clientController;
 
     @MockBean
@@ -166,6 +167,97 @@ class ClientControllerTest {
         assertEquals("IT", clientDTO.getSector());
     }
 
-//    @Test
-//    void get
+    @Test
+    void getClientsByCompanyName_ShouldReturnListOfObjects_ValidReturn() throws Exception {
+        final UUID id1 = UUID.randomUUID();
+        ClientDTO clientDTO1 = ClientDTO.builder().clientId(id1).companyName("Atos").sector("IT")
+                .city("Paris").country("France").size(1000).build();
+
+        final UUID id2 = UUID.randomUUID();
+        ClientDTO clientDTO2 = ClientDTO.builder().clientId(id2).companyName("Atos").sector("IT")
+                .city("Lille").country("France").size(2000).build();
+
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority("USER_ADMIN"));
+        UserDetails userLogin = new org.springframework.security.core.userdetails.User("Renos87", "1234", authorityList);
+
+        List<ClientDTO> clientDTOList = new ArrayList<>(Arrays.asList(clientDTO1, clientDTO2));
+
+        String tokenString = "0123456789.ABCDEFGJKLMN.!@#$%^";
+
+        when(userService.loadUserByUsername("Renos87")).thenReturn(userLogin);
+        when(jwtUtil.generateToken(userLogin)).thenReturn("Bearer " + tokenString);
+        when(clientService.getClientByName(any())).thenReturn(clientDTOList);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/1.0/clients/companyName/{companyName}", "Atos")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + tokenString)
+                        .content(om.writeValueAsString(clientDTOList)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[*]", hasSize(clientDTOList.size())))
+                .andExpect(jsonPath("$[0].clientId", is(clientDTOList.get(0).getClientId().toString())))
+                .andExpect(jsonPath("$[0].companyName", is(clientDTOList.get(0).getCompanyName())))
+                .andExpect(jsonPath("$[0].sector", is(clientDTOList.get(0).getSector())))
+                .andExpect(jsonPath("$[1].clientId", is(clientDTOList.get(1).getClientId().toString())))
+                .andExpect(jsonPath("$[1].companyName", is(clientDTOList.get(1).getCompanyName())))
+                .andExpect(jsonPath("$[1].sector", is(clientDTOList.get(1).getSector())))
+                .andReturn();
+
+        String jsonResponse = mvcResult.getResponse().getContentAsString();
+        List<ClientDTO> myObjectsRes = om.readValue(jsonResponse, om.getTypeFactory().constructCollectionType(List.class, ClientDTO.class));
+
+        assertNotNull(myObjectsRes);
+        assertEquals("Atos", myObjectsRes.get(0).getCompanyName());
+        assertEquals("Paris", myObjectsRes.get(0).getCity());
+        assertEquals("Atos", myObjectsRes.get(1).getCompanyName());
+        assertEquals("Paris", myObjectsRes.get(1).getCity());
+    }
+
+    @Test
+    void getClientsByCityLocation_ShouldReturnListOfObjects_ValidReturn() throws Exception {
+        final UUID id1 = UUID.randomUUID();
+        ClientDTO clientDTO1 = ClientDTO.builder().clientId(id1).companyName("Atos").sector("IT")
+                .city("Paris").country("France").size(1000).build();
+
+        final UUID id2 = UUID.randomUUID();
+        ClientDTO clientDTO2 = ClientDTO.builder().clientId(id2).companyName("Alten").sector("IT")
+                .city("Paris").country("France").size(2000).build();
+
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority("USER_ADMIN"));
+        UserDetails userLogin = new org.springframework.security.core.userdetails.User("Renos87", "1234", authorityList);
+
+        List<ClientDTO> clientDTOList = new ArrayList<>(Arrays.asList(clientDTO1, clientDTO2));
+
+        String tokenString = "0123456789.ABCDEFGJKLMN.!@#$%^";
+
+        when(userService.loadUserByUsername("Renos87")).thenReturn(userLogin);
+        when(jwtUtil.generateToken(userLogin)).thenReturn("Bearer " + tokenString);
+        when(clientService.getClientsByCity(any())).thenReturn(clientDTOList);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/1.0/clients/city/{city}", "Paris")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + tokenString)
+                        .content(om.writeValueAsString(clientDTOList)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$[*]", hasSize(clientDTOList.size())))
+                .andExpect(jsonPath("$[0].clientId", is(clientDTOList.get(0).getClientId().toString())))
+                .andExpect(jsonPath("$[0].companyName", is(clientDTOList.get(0).getCompanyName())))
+                .andExpect(jsonPath("$[0].sector", is(clientDTOList.get(0).getSector())))
+                .andExpect(jsonPath("$[1].clientId", is(clientDTOList.get(1).getClientId().toString())))
+                .andExpect(jsonPath("$[1].companyName", is(clientDTOList.get(1).getCompanyName())))
+                .andExpect(jsonPath("$[1].sector", is(clientDTOList.get(1).getSector())))
+                .andReturn();
+
+        String jsonResponse = mvcResult.getResponse().getContentAsString();
+        List<ClientDTO> myObjectsRes = om.readValue(jsonResponse, om.getTypeFactory().constructCollectionType(List.class, ClientDTO.class));
+
+        assertNotNull(myObjectsRes);
+        assertEquals("Atos", myObjectsRes.get(0).getCompanyName());
+        assertEquals("Paris", myObjectsRes.get(0).getCity());
+        assertEquals("Alten", myObjectsRes.get(1).getCompanyName());
+        assertEquals("Paris", myObjectsRes.get(1).getCity());
+    }
 }
