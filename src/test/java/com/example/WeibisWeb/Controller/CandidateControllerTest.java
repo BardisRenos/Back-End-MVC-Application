@@ -316,4 +316,6 @@ class CandidateControllerTest {
         assertEquals("Nikos", myObjectsRes.get(1).getName());
         assertEquals("Bardis", myObjectsRes.get(1).getLastName());
     }
+
+
 }
