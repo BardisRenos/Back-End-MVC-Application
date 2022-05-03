@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -30,13 +31,11 @@ import static org.mockito.Mockito.*;
  */
 @ContextConfiguration(classes = {CandidateServiceImpl.class})
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles("testServiceLayer")
 class CandidateServiceImplTest {
 
     @MockBean
     private CandidateRepository candidateRepository;
-
-    @MockBean
-    private CandidateMapper candidateMapper;
 
     @Autowired
     private CandidateServiceImpl candidateServiceImpl;
@@ -44,7 +43,6 @@ class CandidateServiceImplTest {
     @BeforeEach
     void setUp() {
         this.candidateRepository = mock(CandidateRepository.class);
-        this.candidateMapper = mock(CandidateMapper.class);
         this.candidateServiceImpl = new CandidateServiceImpl(this.candidateRepository);
     }
 

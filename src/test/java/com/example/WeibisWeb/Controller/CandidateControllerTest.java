@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * JUnit testing for the CandidateController layer
  */
 @WebMvcTest(controllers = CandidateController.class)
-@ActiveProfiles("test")
+@ActiveProfiles("testControllerLayer")
 class CandidateControllerTest {
 
     @Autowired
