@@ -19,4 +19,5 @@ public interface UserService {
     UserNoPassDTO registerUser(UserDTO userDTO);
     UserNoPassDTO replaceUser(UserNoPassDTO userNoPassDTO, UUID id) throws UserNotFoundException;
     String deleteById(UUID id) throws UserNotFoundException;
+    UserDTO getUserByEmail(String email);
 }
