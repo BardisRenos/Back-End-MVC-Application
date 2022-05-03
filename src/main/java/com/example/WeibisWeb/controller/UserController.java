@@ -135,10 +135,10 @@ public class UserController {
     }
 
     /**
-     * Delete the user by the id number
+     * Delete the User by giving an id number
      * @param id The id number of the User
-     * @return A string which indicates the entity id is deleted
-     * @throws UserNotFoundException The exception that throws
+     * @return A String which indicates the entity id is deleted
+     * @throws UserNotFoundException The Exception that throws
      */
     @DeleteMapping(value = "/user/{id}")
     public String deleteUser(@PathVariable(value = "id") UUID id) throws UserNotFoundException {
