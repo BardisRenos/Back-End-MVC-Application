@@ -165,4 +165,7 @@ class ClientControllerTest {
         assertEquals("Atos", clientDTO.getCompanyName());
         assertEquals("IT", clientDTO.getSector());
     }
+
+//    @Test
+//    void get
 }

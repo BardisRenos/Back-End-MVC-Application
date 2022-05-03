@@ -127,14 +127,19 @@ public class UserController {
      * Updating the User with new data by giving the id of the User
      * @param id The id of the User
      * @return UserNoPassDTO class
-     * @throws UserNotFoundException
      */
     @PutMapping(value = "/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserNoPassDTO replaceUser(@RequestBody UserNoPassDTO userNoPassDTO, @PathVariable(value = "id") UUID id) throws UserNotFoundException {
+    public UserNoPassDTO replaceUser(@RequestBody UserNoPassDTO userNoPassDTO, @PathVariable(value = "id") UUID id) {
         return userServiceImpl.replaceUser(userNoPassDTO, id);
     }
 
+    /**
+     * Delete the user by the id number
+     * @param id The id number of the User
+     * @return A string which indicates the entity id is deleted
+     * @throws UserNotFoundException The exception that throws
+     */
     @DeleteMapping(value = "/user/{id}")
     public String deleteUser(@PathVariable(value = "id") UUID id) throws UserNotFoundException {
         return userServiceImpl.deleteById(id);

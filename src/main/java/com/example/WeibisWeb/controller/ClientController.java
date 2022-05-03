@@ -155,10 +155,10 @@ public class ClientController {
     }
 
     /**
-     * Delete the Client with an id number
-     * @param id The id number of the User
+     * Delete the Client by the id number
+     * @param id The id number of the Client
      * @return A string which indicates the entity id is deleted
-     * @throws ClientNotFoundException
+     * @throws ClientNotFoundException The exception that throws
      */
     @DeleteMapping(value = "/client/{id}")
     @ResponseStatus(HttpStatus.OK)
