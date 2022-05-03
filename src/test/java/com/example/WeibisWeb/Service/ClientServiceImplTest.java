@@ -6,30 +6,37 @@ import com.example.WeibisWeb.dto.ClientJobsDTO;
 import com.example.WeibisWeb.exception.ClientNotFoundException;
 import com.example.WeibisWeb.resources.Client;
 import com.example.WeibisWeb.resources.JobDescription;
+import com.example.WeibisWeb.service.CandidateServiceImpl;
 import com.example.WeibisWeb.service.ClientServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+/**
+ * JUnit testing for the ClientService layer
+ */
+@ContextConfiguration(classes = {ClientServiceImpl.class})
 @ExtendWith(SpringExtension.class)
+@ActiveProfiles("testServiceLayer")
 class ClientServiceImplTest {
 
     @MockBean
     private ClientRepository clientRepository;
 
-    @InjectMocks
+    @Autowired
     private ClientServiceImpl clientRepositoryImpl;
 
 
@@ -95,7 +102,7 @@ class ClientServiceImplTest {
 
         List<Client> listOfClient = new ArrayList<>(Arrays.asList(client1, client2));
 
-        when(clientRepository.findByCompanyName("Atos")).thenReturn(listOfClient);
+        when(clientRepository.findByCompanyName(any())).thenReturn(listOfClient);
 
         List<ClientDTO> clientDTO = clientRepositoryImpl.getClientByName("Atos");
         assertAll("Should return attributes of the ClientDTO object",
@@ -126,7 +133,7 @@ class ClientServiceImplTest {
 
         List<Client> listOfClient = new ArrayList<>(Arrays.asList(client1, client2, client3));
 
-        when(clientRepository.findByCity("Paris")).thenReturn(listOfClient);
+        when(clientRepository.findByCity(any())).thenReturn(listOfClient);
 
         List<ClientDTO> clientDTO = clientRepositoryImpl.getClientsByCity("Paris");
         assertAll("Should return attributes of the ClientDTO object",
@@ -173,7 +180,7 @@ class ClientServiceImplTest {
 
         List<Client> listOfClient = new ArrayList<>(Arrays.asList(client1, client2, client3));
 
-        when(clientRepository.findByCompanyNameAndJobName("Atos")).thenReturn(listOfClient);
+        when(clientRepository.findByCompanyNameAndJobName(any())).thenReturn(listOfClient);
 
         List<ClientJobsDTO> clientJobsDTOList = clientRepositoryImpl.getClientsByNameWithJobs("Atos");
 
@@ -223,7 +230,7 @@ class ClientServiceImplTest {
 
         List<Client> listOfClient = new ArrayList<>(Arrays.asList(client1, client2, client3));
 
-        when(clientRepository.findByCompanyNameAndLocation("Atos","Paris")).thenReturn(listOfClient);
+        when(clientRepository.findByCompanyNameAndLocation(any(),any())).thenReturn(listOfClient);
         List<ClientJobsDTO> clientJobsDTOList = clientRepositoryImpl.getClientsByNameAndLocation("Atos", "Paris");
 
         assertAll("Should return attributes of the ClientJobsDTO object",
