@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * The entity class of the candidates database table
+ * The entity class of the candidates' database table
  */
 @Entity
 @Getter
@@ -54,6 +54,16 @@ public class Candidate implements Serializable {
     private Set<JobDescription> jobDescription;
 
 
+    /**
+     * Constructor of the Candidate
+     * @param candidateId The candidate id
+     * @param name The name of the candidate
+     * @param lastName The last name of the candidate
+     * @param dob The date of birth of the candidate
+     * @param address The address of the candidate
+     * @param city The city of the candidate
+     * @param country The country of the candidate
+     */
     public Candidate(UUID candidateId, String name, String lastName, String dob, String address, String city, String country) {
         this.candidateId = candidateId;
         this.name = name;

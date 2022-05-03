@@ -20,15 +20,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
           dob     	              VARCHAR(24),
           address                 VARCHAR(256),
           city                    VARCHAR(64),
-          country                 VARCHAR(64),
-          education               VARCHAR(64),
-          major                   VARCHAR(64),
-          phone_number            VARCHAR(20),
-          legal_status            VARCHAR(15),
-          programming_languages   VARCHAR(64),
-          database_name           VARCHAR(64),
-          year_of_experience      INTEGER);
-      CREATE INDEX candidate_index ON candidates (candidate_id, programming_languages, database_name);
+          country                 VARCHAR(64));
+      CREATE INDEX candidate_index ON candidates (candidate_id, );
 
       INSERT INTO candidates (candidate_id, name, last_name, dob, address, city) VALUES
           (uuid_generate_v4(), 'Renos', 'Bardis', '15/10/1987', '78 bd du president wilson', 'Antibes'),
