@@ -1,4 +1,4 @@
-package com.example.WeibisWeb;
+package com.example.WeibisWeb.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

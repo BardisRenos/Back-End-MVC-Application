@@ -1,6 +1,6 @@
 package com.example.WeibisWeb.controller;
 
-import com.example.WeibisWeb.APIResponse;
+import com.example.WeibisWeb.response.APIResponse;
 import com.example.WeibisWeb.dto.CandidateDTO;
 import com.example.WeibisWeb.exception.CandidateNotFoundException;
 import com.example.WeibisWeb.service.CandidateServiceImpl;
