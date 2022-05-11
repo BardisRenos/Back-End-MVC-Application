@@ -138,37 +138,32 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository.findByCompanyNameAndStatus(companyName, status).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
-    @Override
-    public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) throws ClientNotFoundException {
-        return null;
-    }
-
     /**
      * Updating the Client with new data by giving the id of the client
      * @param clientDTO the clientDTO object
      * @param id The id of the Client
      * @return A ClientDTO object
      */
-//    @Override
-//    public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) {
-//        Client clientEntity = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
-//
-//        return clientRepository.findById(id).map(
-//                client -> {
-//                    client.setClientId(clientEntity.getClientId());
-//                    client.setCompanyName(clientEntity.getCompanyName());
-//                    client.setSector(clientEntity.getSector());
-//                    client.setCity(clientEntity.getCity());
-//                    client.setCountry(clientEntity.getCountry());
-//                    client.setSize(clientEntity.getSize());
-//                    Client clientRes = clientRepository.save(client);
-//                    return ClientMapper.convertAllClientEntityToDTO(clientRes);
-//                }).orElseGet(()-> { clientDTO.setClientId(id);
-//                    Client client = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
-//                    client = clientRepository.save(client);
-//                    return  ClientMapper.convertAllClientEntityToDTO(client);
-//                });
-//    }
+    @Override
+    public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) {
+        Client clientEntity = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
+
+        return clientRepository.findById(id).map(
+                client -> {
+                    client.setClientId(clientEntity.getClientId());
+                    client.setCompanyName(clientEntity.getCompanyName());
+                    client.setSector(clientEntity.getSector());
+                    client.setCity(clientEntity.getCity());
+                    client.setCountry(clientEntity.getCountry());
+                    client.setSize(clientEntity.getSize());
+                    Client clientRes = clientRepository.save(client);
+                    return ClientMapper.convertAllClientEntityToDTO(clientRes);
+                }).orElseGet(()-> { clientDTO.setClientId(id);
+                    Client client = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
+                    client = clientRepository.save(client);
+                    return  ClientMapper.convertAllClientEntityToDTO(client);
+                });
+    }
 
     /**
      * Delete Client by giving an id number

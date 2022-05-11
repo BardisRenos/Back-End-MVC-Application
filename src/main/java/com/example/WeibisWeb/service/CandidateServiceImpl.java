@@ -7,6 +7,10 @@ import com.example.WeibisWeb.exception.CandidateNotFoundException;
 import com.example.WeibisWeb.resources.Candidate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -46,6 +50,21 @@ public class CandidateServiceImpl implements CandidateService {
         log.info("Getting all candidates from the database");
         return candidateRepository.findAll().stream().map(CandidateMapper::convertAllCandidateEntityToDTO).collect(Collectors.toList());
     }
+
+    /**
+     * Retrieve all Candidates by pagination
+     * @param offset The offset of the data that we need to retrieve
+     * @param pageSize The number of the records that will be retrieved on each offset
+     * @return A Page<CandidateDTO>
+     */
+    @Override
+    public Page<CandidateDTO> getAllCandidatesPagination(int offset, int pageSize) {
+        log.info("Getting all candidates from the database by pagination with offset: {} and pageSize: {} variables", offset, pageSize);
+        Page<Candidate> pageResponse = candidateRepository.findAll(PageRequest.of(offset, pageSize));
+
+        return pageResponse.map(CandidateMapper::convertAllCandidateEntityToDTO);
+    }
+
 
     /**
      * Insert a new Candidate entity
