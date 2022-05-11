@@ -148,11 +148,11 @@ public class ClientController {
      * @param id The id number of the Client
      * @return A ClientDTO class
      */
-//    @PutMapping(value = "/clients/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public ClientDTO replaceClient(@RequestBody ClientDTO clientDTO, @PathVariable(value = "id") UUID id) {
-//        return clientServiceImpl.getReplaceClient(clientDTO, id);
-//    }
+    @PutMapping(value = "/clients/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ClientDTO replaceClient(@RequestBody ClientDTO clientDTO, @PathVariable(value = "id") UUID id) {
+        return clientServiceImpl.getReplaceClient(clientDTO, id);
+    }
 
     /**
      * Delete the Client by the id number

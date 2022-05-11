@@ -30,7 +30,15 @@ public class DBconfig {
 					new Candidate(UUID.randomUUID(), "Renos", "Bardis", "15/10/1987", "78 BD du President Wilson", "Antibes", "France"),
 					new Candidate(UUID.randomUUID(), "Johny", "Marlen", "15/11/1977", "75 Oxford Street", "London" ,"UK"),
 					new Candidate(UUID.randomUUID(), "Nick", "Papadopoulos", "11/10/1977", "96 Athens Street", "Athens", "Greece"),
-					new Candidate(UUID.randomUUID(), "George", "Papas", "01/12/1980", "58 Rue du Cannes", "Cannes", "France")));
+					new Candidate(UUID.randomUUID(), "George", "Papas", "01/12/1980", "58 Rue du Cannes", "Cannes", "France"),
+					new Candidate(UUID.randomUUID(), "Renos2", "Bardis2", "15/10/1987", "78 BD du President Wilson", "Antibes", "France"),
+					new Candidate(UUID.randomUUID(), "Johny2", "Marlen2", "15/11/1977", "75 Oxford Street", "London" ,"UK"),
+					new Candidate(UUID.randomUUID(), "Nick2", "Papadopoulos2", "11/10/1977", "96 Athens Street", "Athens", "Greece"),
+					new Candidate(UUID.randomUUID(), "George2", "Papas2", "01/12/1980", "58 Rue du Cannes", "Cannes", "France"),
+					new Candidate(UUID.randomUUID(), "Renos3", "Bardis3", "15/10/1987", "78 BD du President Wilson", "Antibes", "France"),
+					new Candidate(UUID.randomUUID(), "Johny3", "Marlen3", "15/11/1977", "75 Oxford Street", "London" ,"UK"),
+					new Candidate(UUID.randomUUID(), "Nick3", "Papadopoulos3", "11/10/1977", "96 Athens Street", "Athens", "Greece"),
+					new Candidate(UUID.randomUUID(), "George3", "Papas3", "01/12/1980", "58 Rue du Cannes", "Cannes", "France")));
 
 			List<JobDescription> jobDescriptions = new ArrayList<>(Arrays.asList(
 					new JobDescription(UUID.randomUUID(), "Atos", "Java Developer", "Lille", "Java EE developer in Fintech", "Java", "SQL", "Spring", "Senior", "Open", 1),

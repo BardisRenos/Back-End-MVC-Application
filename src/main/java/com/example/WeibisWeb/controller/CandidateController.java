@@ -1,9 +1,11 @@
 package com.example.WeibisWeb.controller;
 
+import com.example.WeibisWeb.APIResponse;
 import com.example.WeibisWeb.dto.CandidateDTO;
 import com.example.WeibisWeb.exception.CandidateNotFoundException;
 import com.example.WeibisWeb.service.CandidateServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +42,19 @@ public class CandidateController {
     @ResponseStatus(HttpStatus.OK)
     public List<CandidateDTO> getAllCandidates() {
         return candidateServiceImpl.getAllCandidates();
+    }
+
+    /**
+     *
+     * @param offset
+     * @param pageSize
+     * @return
+     */
+    @GetMapping(value = "/candidates/pagination/{offset}/{pageSize}")
+    public APIResponse<Page<CandidateDTO>> getAllCandidatesWithPaginationSorting(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<CandidateDTO> candidateDTOSWithPagination = candidateServiceImpl.getAllCandidatesPagination(offset, pageSize);
+
+        return new APIResponse<>(candidateDTOSWithPagination.getSize(), candidateDTOSWithPagination);
     }
 
     /**
