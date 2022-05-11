@@ -65,22 +65,24 @@ class CandidateServiceImplTest {
 
     @Test
     void registerCandidate_ShouldReturnListObjects_ValidReturn() {
-        CandidateDTO candidate1 = CandidateDTO.builder()
-                .candidateId(UUID.randomUUID()).name("Renos")
+        final UUID id = UUID.randomUUID();
+        CandidateDTO candidateDTO = CandidateDTO.builder()
+                .candidateId(id).name("Renos")
                 .lastName("Bardis").dob("15/10/1987").address("78 BD du President Wilson")
                 .city("Antibes").country("France").build();
 
         Candidate candidate = Candidate.builder()
-                .candidateId(UUID.randomUUID()).name("Renos")
+                .candidateId(id).name("Renos")
                 .lastName("Bardis").dob("15/10/1987").address("78 BD du President Wilson")
                 .city("Antibes").country("France").build();
 
         when(candidateRepository.save(any(Candidate.class))).thenReturn(candidate);
-        CandidateDTO candidateDTO = candidateServiceImpl.registerCandidate(candidate1);
+        CandidateDTO candidateDTORes = candidateServiceImpl.registerCandidate(candidateDTO);
         assertAll("Should return attributes of the CandidateDTO object",
-                ()->assertEquals("Antibes", candidateDTO.getCity()),
-                ()->assertEquals("France", candidateDTO.getCountry()),
-                ()->assertEquals("Bardis", candidateDTO.getLastName()));
+                ()->assertEquals(id, candidateDTORes.getCandidateId()),
+                ()->assertEquals("Antibes", candidateDTORes.getCity()),
+                ()->assertEquals("France", candidateDTORes.getCountry()),
+                ()->assertEquals("Bardis", candidateDTORes.getLastName()));
     }
 
     @Test

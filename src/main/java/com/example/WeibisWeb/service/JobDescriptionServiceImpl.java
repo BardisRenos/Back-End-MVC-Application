@@ -9,6 +9,8 @@ import com.example.WeibisWeb.exception.JobDescriptionNotFoundException;
 import com.example.WeibisWeb.resources.JobDescription;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -49,6 +51,20 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
     }
 
     /**
+     * Retrieve all JobDescription by pagination
+     * @param offset The offset of the data that we need to retrieve
+     * @param pageSize The number of the records that will be retrieved on each offset
+     * @return A Page<JobDescriptionDTO>
+     */
+    @Override
+    public Page<JobDescriptionDTO> getAllJobsPagination(int offset, int pageSize) {
+        log.info("Getting all Job Descriptions from the database by pagination with offset: {} and pageSize: {} variables", offset, pageSize);
+        Page<JobDescription> pageResponse = jobDescriptionRepository.findAll(PageRequest.of(offset, pageSize));
+
+        return pageResponse.map(JobDescriptionMapper::convertAllJobDescriptionEntityToDTO);
+    }
+
+    /**
      * Retrieve Job Description by programming language
      * @param programmingLanguage The programming language of the JobDescription
      * @return A list of JobDescriptionDTO
@@ -81,14 +97,15 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
 
     /**
      * Insert a new JobDescription entity
-     * @param jobDescription the job description object
+     * @param jobDescriptionDTO the job description object
      * @return A JobDescriptionDTO object
      */
     @Override
-    public JobDescriptionDTO registerJobDescription(JobDescription jobDescription) {
-        log.info("Saving new Job Description with ID: {}", jobDescription.getJobDescriptionsId());
-        jobDescription = jobDescriptionRepository.save(jobDescription);
-        return JobDescriptionMapper.convertAllJobDescriptionEntityToDTO(jobDescription);
+    public JobDescriptionDTO registerJobDescription(JobDescriptionDTO jobDescriptionDTO) {
+        log.info("Saving new Job Description with ID: {}", jobDescriptionDTO.getJobDescriptionId());
+        JobDescription jobDescriptionRes = JobDescriptionMapper.convertAllJobDescriptionDTOToEntity(jobDescriptionDTO);
+        jobDescriptionRes = jobDescriptionRepository.save(jobDescriptionRes);
+        return JobDescriptionMapper.convertAllJobDescriptionEntityToDTO(jobDescriptionRes);
     }
 
     /**
