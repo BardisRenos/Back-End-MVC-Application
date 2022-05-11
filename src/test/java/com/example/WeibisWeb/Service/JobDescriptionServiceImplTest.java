@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 @ContextConfiguration(classes = {JobDescriptionServiceImpl.class})
 @ExtendWith(SpringExtension.class)
@@ -215,20 +216,25 @@ class JobDescriptionServiceImplTest {
 
     @Test
     void registerJobDescription_ShouldReturnAnObject_ValidReturn() {
-        final UUID id1 = UUID.randomUUID();
-        JobDescription jobDescription1 = JobDescription.builder().jobDescriptionsId(id1)
+        final UUID id = UUID.randomUUID();
+        JobDescriptionDTO jobDescriptionDTO = JobDescriptionDTO.builder().jobDescriptionId(id)
                 .companyName("Atos").title("Java").location("Paris").description("Searching Java developer")
                 .programmingLanguage("Java").databaseName("SQL").framework("Spring").level("Senior")
                 .isOpen("Open").numberNeeded(2).build();
 
-        when(jobDescriptionRepository.save(jobDescription1)).thenReturn(jobDescription1);
-        JobDescriptionDTO jobDescriptionDTO = jobDescriptionService.registerJobDescription(jobDescription1);
+        JobDescription jobDescription = JobDescription.builder().jobDescriptionsId(id)
+                .companyName("Atos").title("Java").location("Paris").description("Searching Java developer")
+                .programmingLanguage("Java").databaseName("SQL").framework("Spring").level("Senior")
+                .isOpen("Open").numberNeeded(2).build();
+
+        when(jobDescriptionRepository.save(any(JobDescription.class))).thenReturn(jobDescription);
+        JobDescriptionDTO jobDescriptionDTORes = jobDescriptionService.registerJobDescription(jobDescriptionDTO);
 
         assertAll("Should return attributes of the JobDescriptionDTO object",
-                ()->assertEquals("Atos", jobDescriptionDTO.getCompanyName()),
-                ()->assertEquals("Atos", jobDescriptionDTO.getCompanyName()),
-                ()->assertEquals("Java", jobDescriptionDTO.getProgrammingLanguage()),
-                ()->assertEquals("SQL", jobDescriptionDTO.getDatabaseName()));
+                ()->assertEquals("Atos", jobDescriptionDTORes.getCompanyName()),
+                ()->assertEquals("Atos", jobDescriptionDTORes.getCompanyName()),
+                ()->assertEquals("Java", jobDescriptionDTORes.getProgrammingLanguage()),
+                ()->assertEquals("SQL", jobDescriptionDTORes.getDatabaseName()));
     }
 
 }

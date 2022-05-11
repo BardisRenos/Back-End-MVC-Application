@@ -20,4 +20,14 @@ public class JobDescriptionMapper {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(jobDescriptionEntity, JobDescriptionDTO.class);
     }
+
+    /**
+     * The conversion of the JobDescriptionDTO object into JobDescription
+     * @param jobDescriptionDTO JobDescriptionDTO class
+     * @return JobDescription class
+     */
+    public static JobDescription convertAllJobDescriptionDTOToEntity(JobDescriptionDTO jobDescriptionDTO){
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(jobDescriptionDTO, JobDescription.class);
+    }
 }

@@ -28,6 +28,6 @@ public class CandidateMapper {
      */
     public static Candidate convertAllCandidateDTOtoEntity(CandidateDTO candidateDTO){
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(CandidateDTO.class, Candidate.class);
+        return modelMapper.map(candidateDTO, Candidate.class);
     }
 }

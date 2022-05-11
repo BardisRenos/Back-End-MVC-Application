@@ -1,11 +1,12 @@
 package com.example.WeibisWeb.controller;
 
+import com.example.WeibisWeb.APIResponse;
 import com.example.WeibisWeb.dto.JobDescriptionCandidateDTO;
 import com.example.WeibisWeb.dto.JobDescriptionDTO;
 import com.example.WeibisWeb.exception.JobDescriptionNotFoundException;
-import com.example.WeibisWeb.resources.JobDescription;
 import com.example.WeibisWeb.service.JobDescriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,19 @@ public class JobDescriptionController {
     @GetMapping(value = "/job")
     public JobDescriptionDTO getJobDescriptionsByCandidateId(@RequestParam(value = "id") UUID id) throws JobDescriptionNotFoundException {
         return jobDescriptionServiceImpl.getJobsDescriptionById(id);
+    }
+
+    /**
+     * Retrieve all JobDescription by pagination
+     * @param offset The offset of the data that we need to retrieve
+     * @param pageSize The number of the records that will be retrieved on each offset
+     * @return A APIResponse<Page<JobDescriptionDTO>>
+     */
+    @GetMapping(value = "/job/pagination/{offset}/{pageSize}")
+    public APIResponse<Page<JobDescriptionDTO>> getAllJobsWithPaginationSorting(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<JobDescriptionDTO> jobDescriptionDTOPage = jobDescriptionServiceImpl.getAllJobsPagination(offset, pageSize);
+
+        return new APIResponse<>(jobDescriptionDTOPage.getSize(), jobDescriptionDTOPage);
     }
 
     /**
@@ -81,13 +95,13 @@ public class JobDescriptionController {
 
     /**
      * Inserting a new Job Description Entity
-     * @param jobDescription The jobDescription class
+     * @param jobDescriptionDTO The jobDescriptionDTO class
      * @return A Job Description class
      */
     @PostMapping("/jobDescription")
     @ResponseStatus(HttpStatus.CREATED)
-    public JobDescriptionDTO saveJobDescription(@Valid @RequestBody JobDescription jobDescription) {
-        return jobDescriptionServiceImpl.registerJobDescription(jobDescription);
+    public JobDescriptionDTO saveJobDescription(@Valid @RequestBody JobDescriptionDTO jobDescriptionDTO) {
+        return jobDescriptionServiceImpl.registerJobDescription(jobDescriptionDTO);
     }
 
     /**
