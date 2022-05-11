@@ -45,6 +45,7 @@ public class JobDescriptionController {
      * @return A APIResponse<Page<JobDescriptionDTO>>
      */
     @GetMapping(value = "/job/pagination/{offset}/{pageSize}")
+    @ResponseStatus(HttpStatus.OK)
     public APIResponse<Page<JobDescriptionDTO>> getAllJobsWithPaginationSorting(@PathVariable int offset, @PathVariable int pageSize) {
         Page<JobDescriptionDTO> jobDescriptionDTOPage = jobDescriptionServiceImpl.getAllJobsPagination(offset, pageSize);
 

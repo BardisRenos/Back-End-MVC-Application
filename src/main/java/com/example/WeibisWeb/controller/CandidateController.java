@@ -51,6 +51,7 @@ public class CandidateController {
      * @return A APIResponse<Page<CandidateDTO>>
      */
     @GetMapping(value = "/candidates/pagination/{offset}/{pageSize}")
+    @ResponseStatus(HttpStatus.OK)
     public APIResponse<Page<CandidateDTO>> getAllCandidatesWithPaginationSorting(@PathVariable int offset, @PathVariable int pageSize) {
         Page<CandidateDTO> candidateDTOSWithPagination = candidateServiceImpl.getAllCandidatesPagination(offset, pageSize);
 
