@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 @CacheConfig(cacheNames = {"Clients"})
+@Profile(value = {"dev", "test"})
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
@@ -67,7 +69,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     /**
-     * Retrieve Client by Id
+     * Retrieve Client by id
      * @param id The id of the Client
      * @return A ClientDTO class
      */

@@ -7,10 +7,9 @@ import com.example.WeibisWeb.exception.CandidateNotFoundException;
 import com.example.WeibisWeb.resources.Candidate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,6 +25,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Profile(value = {"dev", "test"})
 public class CandidateServiceImpl implements CandidateService {
 
     private final CandidateRepository candidateRepository;
@@ -132,7 +132,7 @@ public class CandidateServiceImpl implements CandidateService {
      * Delete candidate by giving an id number
      * @param id The id of the Candidate
      * @return A String which indicates the entity id deleted
-     * @throws CandidateNotFoundException
+     * @throws CandidateNotFoundException The exception that throws
      */
     @Override
     public String deleteById(UUID id) throws CandidateNotFoundException {

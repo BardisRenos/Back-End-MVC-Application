@@ -29,7 +29,7 @@ import static org.mockito.ArgumentMatchers.any;
 
 @ContextConfiguration(classes = {JobDescriptionServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("testServiceLayer")
+@ActiveProfiles("test")
 class JobDescriptionServiceImplTest {
 
     @MockBean

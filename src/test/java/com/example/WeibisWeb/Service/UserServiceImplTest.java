@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {UserServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("testServiceLayer")
+@ActiveProfiles("test")
 class UserServiceImplTest {
 
     @MockBean
