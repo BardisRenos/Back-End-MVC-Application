@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class JobDescriptionCandidateMapper {
 
+    /**
+     * The conversion of the JobDescription object into JobDescriptionCandidateDTO
+     * @param jobDescriptionEntity A jobDescriptionEntity class
+     * @return A JobDescriptionCandidateDTO class
+     */
     public static JobDescriptionCandidateDTO convertAllJobDescriptionCandidateEntityToDTO(JobDescription jobDescriptionEntity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(jobDescriptionEntity, JobDescriptionCandidateDTO.class);

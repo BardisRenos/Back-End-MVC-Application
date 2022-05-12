@@ -33,9 +33,9 @@ public class UserMapper {
     }
 
     /**
-     * The conversion of the UserDTO into UserNoPassDTO
+     * The conversion of the User into UserNoPassDTO
      * @param userEntity User entity class
-     * @return UserNoPassDTO class
+     * @return A UserNoPassDTO class
      */
     public static UserNoPassDTO convertUserEntityIntoDTO(User userEntity) {
         ModelMapper modelMapper = new ModelMapper();
@@ -43,9 +43,9 @@ public class UserMapper {
     }
 
     /**
-     *
-     * @param userNoPassDTO
-     * @return
+     * The conversation of the UserNoPassDTO into User
+     * @param userNoPassDTO UserNoPassDTO entity class
+     * @return A User class
      */
     public static User convertUserNoPassDTOToEntity(UserNoPassDTO userNoPassDTO) {
         ModelMapper modelMapper = new ModelMapper();

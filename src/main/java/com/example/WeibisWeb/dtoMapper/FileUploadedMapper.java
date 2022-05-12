@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileUploadedMapper {
 
+    /**
+     * The conversion of the fileUploadEntity object into FileUploadedDTO
+     * @param fileUploadEntity A fileUploadEntity class
+     * @return A FileUploadedDTO class
+     */
     public static FileUploadedDTO convertAllFileUploadedEntityToDTO(UploadedFile fileUploadEntity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(fileUploadEntity, FileUploadedDTO.class);

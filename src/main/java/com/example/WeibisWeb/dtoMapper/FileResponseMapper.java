@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileResponseMapper {
 
+    /**
+     * The conversation of the FileResponse object into FileResponseDTO
+     * @param fileResponseEntity A fileResponseEntity class
+     * @return A FileResponseDTO class
+     */
     public static FileResponseDTO convertAllFileResponseEntityToDTO(FileResponse fileResponseEntity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(fileResponseEntity, FileResponseDTO.class);

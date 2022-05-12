@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientCandidateMapper {
 
+    /**
+     * The conversation of the Client object into ClientJobsDTO
+     * @param clientEntity A clientEntity class
+     * @return A ClientJobsDTO class
+     */
     public static ClientJobsDTO convertAllClientEntityToDTO(Client clientEntity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(clientEntity, ClientJobsDTO.class);
