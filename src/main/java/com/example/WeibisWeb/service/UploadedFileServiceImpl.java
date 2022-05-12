@@ -7,6 +7,7 @@ import com.example.WeibisWeb.exception.FileUploadedNotFoundException;
 import com.example.WeibisWeb.resources.UploadedFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,10 +18,11 @@ import java.util.UUID;
 /**
  * Service layer of UploadedFileService
  */
-@Service
-@RequiredArgsConstructor
-@Transactional
 @Slf4j
+@Service
+@Transactional
+@RequiredArgsConstructor
+@Profile(value = {"dev", "test"})
 public class UploadedFileServiceImpl implements UploadedFileService {
 
     private final FileUpLoadedRepository fileUpLoadedRepository;

@@ -1,6 +1,7 @@
 package com.example.WeibisWeb.dao;
 
 import com.example.WeibisWeb.resources.Candidate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import java.util.UUID;
  * The Repository layer of Candidate
  */
 @Repository
+@Profile(value = {"dev", "test"})
 public interface CandidateRepository extends JpaRepository<Candidate, UUID> {
 
     /**

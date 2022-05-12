@@ -2,22 +2,18 @@ package com.example.WeibisWeb.Service;
 
 import com.example.WeibisWeb.dao.CandidateRepository;
 import com.example.WeibisWeb.dto.CandidateDTO;
-import com.example.WeibisWeb.dtoMapper.CandidateMapper;
 import com.example.WeibisWeb.exception.CandidateNotFoundException;
 import com.example.WeibisWeb.resources.Candidate;
 import com.example.WeibisWeb.service.CandidateServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,7 +27,7 @@ import static org.mockito.Mockito.*;
  */
 @ContextConfiguration(classes = {CandidateServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("testServiceLayer")
+@ActiveProfiles("test")
 class CandidateServiceImplTest {
 
     @MockBean

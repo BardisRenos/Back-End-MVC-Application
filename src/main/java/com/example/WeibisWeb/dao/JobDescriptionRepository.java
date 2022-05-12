@@ -1,6 +1,7 @@
 package com.example.WeibisWeb.dao;
 
 import com.example.WeibisWeb.resources.JobDescription;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,7 @@ import java.util.UUID;
  * Repository layer of Job Description
  */
 @Repository
+@Profile(value = {"dev", "test"})
 public interface JobDescriptionRepository extends JpaRepository<JobDescription, UUID> {
 
     /**

@@ -30,7 +30,7 @@ import static org.mockito.Mockito.when;
  */
 @ContextConfiguration(classes = {ClientServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles("testServiceLayer")
+@ActiveProfiles("test")
 class ClientServiceImplTest {
 
     @MockBean
