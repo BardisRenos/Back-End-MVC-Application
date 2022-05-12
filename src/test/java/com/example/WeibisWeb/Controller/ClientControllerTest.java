@@ -211,7 +211,7 @@ class ClientControllerTest {
         assertEquals("Atos", myObjectsRes.get(0).getCompanyName());
         assertEquals("Paris", myObjectsRes.get(0).getCity());
         assertEquals("Atos", myObjectsRes.get(1).getCompanyName());
-        assertEquals("Paris", myObjectsRes.get(1).getCity());
+        assertEquals("Lille", myObjectsRes.get(1).getCity());
     }
 
     @Test
