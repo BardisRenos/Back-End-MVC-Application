@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The filter for Json web Token Class
+ */
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 

@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * The Json Web Token Util Class
+ */
 @Component
 public class JwtUtil {
 
