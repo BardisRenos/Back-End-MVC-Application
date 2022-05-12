@@ -6,13 +6,10 @@ import com.example.WeibisWeb.dto.JobDescriptionDTO;
 import com.example.WeibisWeb.exception.JobDescriptionNotFoundException;
 import com.example.WeibisWeb.resources.Candidate;
 import com.example.WeibisWeb.resources.JobDescription;
-import com.example.WeibisWeb.service.ClientServiceImpl;
 import com.example.WeibisWeb.service.JobDescriptionServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,10 +20,13 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
 
+/**
+ * JUnit testing for the JobDescriptionService layer
+ */
 @ContextConfiguration(classes = {JobDescriptionServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
