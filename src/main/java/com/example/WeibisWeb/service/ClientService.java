@@ -2,7 +2,9 @@ package com.example.WeibisWeb.service;
 
 import com.example.WeibisWeb.dto.ClientDTO;
 import com.example.WeibisWeb.dto.ClientJobsDTO;
+import com.example.WeibisWeb.dto.JobDescriptionDTO;
 import com.example.WeibisWeb.exception.ClientNotFoundException;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +15,7 @@ import java.util.UUID;
 public interface ClientService {
 
     List<ClientDTO> getAllClient();
+    Page<ClientDTO> getAllClientsPagination(int offset, int pageSize);
     List<ClientJobsDTO> getAllClientWithDescription();
     ClientDTO getClientById(UUID id) throws ClientNotFoundException;
     List<ClientDTO> getClientByName(String companyName);

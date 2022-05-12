@@ -39,7 +39,7 @@ public class JobDescriptionController {
     }
 
     /**
-     * Retrieve all JobDescription by pagination
+     * Retrieve all JobDescriptions by pagination
      * @param offset The offset of the data that we need to retrieve
      * @param pageSize The number of the records that will be retrieved on each offset
      * @return A APIResponse<Page<JobDescriptionDTO>>

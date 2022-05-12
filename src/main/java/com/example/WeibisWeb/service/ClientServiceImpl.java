@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,6 +41,20 @@ public class ClientServiceImpl implements ClientService {
     @Cacheable(value = "Clients")
     public List<ClientDTO> getAllClient() {
         return clientRepository.findAll().stream().map(ClientMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieve all Clients by pagination
+     * @param offset The offset of the data that we need to retrieve
+     * @param pageSize The number of the records that will be retrieved on each offset
+     * @return A Page<ClientDTO>
+     */
+    @Override
+    public Page<ClientDTO> getAllClientsPagination(int offset, int pageSize) {
+        log.info("Getting all Clients from the database by pagination with offset: {} and pageSize: {} variables", offset, pageSize);
+        Page<Client> pageResponse = clientRepository.findAll(PageRequest.of(offset, pageSize));
+
+        return pageResponse.map(ClientMapper::convertAllClientEntityToDTO);
     }
 
     /**
