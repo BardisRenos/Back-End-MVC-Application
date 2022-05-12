@@ -35,10 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable()
-                .authorizeRequests().antMatchers(HttpMethod.POST, "/**/authenticate").permitAll().antMatchers("/**/h2-console/**").permitAll().antMatchers("/**/register").permitAll()
+                .authorizeRequests().antMatchers(HttpMethod.POST, "/**/authenticate").permitAll().antMatchers("/h2-console/**").permitAll().antMatchers("/**/register").permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntrypoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.headers().frameOptions().disable();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
@@ -46,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Exposing the bean of the authentication manager which will be used to run the authentication process
      * @return AuthenticationManager class
-     * @throws Exception
+     * @throws Exception The exception that throws
      */
     @Override
     @Bean
