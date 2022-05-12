@@ -1,11 +1,11 @@
 package com.example.WeibisWeb.controller;
 
-import com.example.WeibisWeb.response.APIResponse;
 import com.example.WeibisWeb.dto.JobDescriptionCandidateDTO;
 import com.example.WeibisWeb.dto.JobDescriptionDTO;
 import com.example.WeibisWeb.exception.JobDescriptionNotFoundException;
+import com.example.WeibisWeb.response.APIResponse;
 import com.example.WeibisWeb.service.JobDescriptionServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +19,10 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/1.0/")
+@RequiredArgsConstructor
 public class JobDescriptionController {
 
     private final JobDescriptionServiceImpl jobDescriptionServiceImpl;
-
-    @Autowired
-    public JobDescriptionController(JobDescriptionServiceImpl jobDescriptionServiceImpl) {
-        this.jobDescriptionServiceImpl = jobDescriptionServiceImpl;
-    }
 
     /**
      * Retrieve Job Descriptions by Id

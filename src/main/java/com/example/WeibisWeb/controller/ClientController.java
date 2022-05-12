@@ -5,7 +5,7 @@ import com.example.WeibisWeb.dto.ClientJobsDTO;
 import com.example.WeibisWeb.exception.ClientNotFoundException;
 import com.example.WeibisWeb.response.APIResponse;
 import com.example.WeibisWeb.service.ClientServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +20,10 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/1.0/")
+@RequiredArgsConstructor
 public class ClientController {
 
     private final ClientServiceImpl clientServiceImpl;
-
-    @Autowired
-    public ClientController(ClientServiceImpl clientServiceImpl) {
-        this.clientServiceImpl = clientServiceImpl;
-    }
 
     /**
      * Retrieve all clients

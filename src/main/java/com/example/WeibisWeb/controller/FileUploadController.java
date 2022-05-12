@@ -6,7 +6,7 @@ import com.example.WeibisWeb.dtoMapper.FileResponseMapper;
 import com.example.WeibisWeb.exception.FileUploadedNotFoundException;
 import com.example.WeibisWeb.fileResponse.FileResponse;
 import com.example.WeibisWeb.service.UploadedFileServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -28,14 +28,10 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/api/1.0/")
+@RequiredArgsConstructor
 public class FileUploadController {
 
     private final UploadedFileServiceImpl uploadedFileServiceImpl;
-
-    @Autowired
-    public FileUploadController(UploadedFileServiceImpl uploadedFileServiceImpl) {
-        this.uploadedFileServiceImpl = uploadedFileServiceImpl;
-    }
 
     /**
      * Uploading a file the Database

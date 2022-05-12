@@ -1,11 +1,13 @@
 package com.example.WeibisWeb.controller;
 
+import com.example.WeibisWeb.JwtModel.JwtRequest;
+import com.example.WeibisWeb.JwtModel.JwtResponse;
 import com.example.WeibisWeb.dto.UserDTO;
 import com.example.WeibisWeb.dto.UserNoPassDTO;
 import com.example.WeibisWeb.exception.UserNotFoundException;
 import com.example.WeibisWeb.security.JwtUtil;
 import com.example.WeibisWeb.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import com.example.WeibisWeb.JwtModel.JwtRequest;
-import com.example.WeibisWeb.JwtModel.JwtResponse;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,18 +25,12 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/api/1.0/")
+@RequiredArgsConstructor
 public class UserController {
 
     private final AuthenticationManager authenticationManager;
     private final UserServiceImpl userServiceImpl;
     private final JwtUtil jwtUtil;
-
-    @Autowired
-    public UserController(AuthenticationManager authenticationManager, UserServiceImpl userServiceImpl, JwtUtil jwtUtil) {
-        this.authenticationManager = authenticationManager;
-        this.userServiceImpl = userServiceImpl;
-        this.jwtUtil = jwtUtil;
-    }
 
     /**
      * Retrieve all Users
