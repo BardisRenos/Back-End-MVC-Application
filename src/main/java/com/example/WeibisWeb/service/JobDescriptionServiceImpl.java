@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 /**
  * Service layer of JobDescription
  */
-@Service
-@RequiredArgsConstructor
-@Transactional
 @Slf4j
+@Service
+@Transactional
+@RequiredArgsConstructor
 public class JobDescriptionServiceImpl implements JobDescriptionService {
 
     private final JobDescriptionRepository jobDescriptionRepository;

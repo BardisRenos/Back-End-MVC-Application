@@ -3,8 +3,10 @@ package com.example.WeibisWeb.controller;
 import com.example.WeibisWeb.dto.ClientDTO;
 import com.example.WeibisWeb.dto.ClientJobsDTO;
 import com.example.WeibisWeb.exception.ClientNotFoundException;
+import com.example.WeibisWeb.response.APIResponse;
 import com.example.WeibisWeb.service.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,20 @@ public class ClientController {
     @ResponseStatus(HttpStatus.OK)
     public List<ClientDTO> getAllClients() {
         return clientServiceImpl.getAllClient();
+    }
+
+    /**
+     * Retrieve all Clients by pagination
+     * @param offset The offset of the data that we need to retrieve
+     * @param pageSize The number of the records that will be retrieved on each offset
+     * @return A APIResponse<Page<ClientDTO>>
+     */
+    @GetMapping(value = "/clients/pagination/{offset}/{pageSize}")
+    @ResponseStatus(HttpStatus.OK)
+    public APIResponse<Page<ClientDTO>> getAllClientsPaginationSorting(@PathVariable int offset, @PathVariable int pageSize) {
+        Page<ClientDTO> clientDTOPage = clientServiceImpl.getAllClientsPagination(offset, pageSize);
+
+        return new APIResponse<>(clientDTOPage.getSize(), clientDTOPage);
     }
 
     /**
