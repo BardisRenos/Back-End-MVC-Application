@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobDescriptionCandidateDTO {
+public class JobDescriptionCandidateDTO implements Serializable {
 
     private UUID JobDescriptionCandidateId;
     private String companyName;
