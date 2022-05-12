@@ -5,6 +5,9 @@ import com.example.WeibisWeb.resources.Client;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+/**
+ * The dto mapper. The class that does the conversion from Client object into ClientJobsDTO object
+ */
 @Service
 public class ClientCandidateMapper {
 
