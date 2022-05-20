@@ -108,6 +108,30 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<!-- test profile -->
+		<profile>
+			<id>test</id>
+			<build>
+<!--				<finalName>${project.artifactId}-test</finalName>-->
+				<filters>
+					<filter>src/main/resources/application-test.properties</filter>
+				</filters>
+			</build>
+		</profile>
+
+		<!-- dev profile -->
+		<profile>
+			<id>dev</id>
+			<build>
+<!--				<finalName>${project.artifactId}-dev</finalName>-->
+				<filters>
+					<filter>src/main/resources/application-dev.properties</filter>
+				</filters>
+			</build>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>

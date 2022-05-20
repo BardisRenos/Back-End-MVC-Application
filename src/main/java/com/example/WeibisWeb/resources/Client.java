@@ -55,7 +55,15 @@ public class Client implements Serializable {
     @JoinColumn(name = "jb_fk", referencedColumnName = "client_id")
     private List<JobDescription> jobDescriptions;
 
-
+    /**
+     * The Client constructor
+     * @param clientId The id of the client
+     * @param companyName The name of the company
+     * @param sector The sector of the company
+     * @param city The city that the company is located
+     * @param country The country of the company
+     * @param size The size of the company. The number of stuff
+     */
     public Client(UUID clientId, String companyName, String sector, String city, String country, Integer size) {
         this.clientId = clientId;
         this.companyName = companyName;
