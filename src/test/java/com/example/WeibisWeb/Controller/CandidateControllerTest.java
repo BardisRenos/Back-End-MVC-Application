@@ -67,16 +67,10 @@ class CandidateControllerTest {
     private CandidateRepository candidateRepository;
 
     @MockBean
-    private ClientRepository clientRepository;
-
-    @MockBean
     private JwtAuthEntrypoint jwtAuthEntrypoint;
 
     @MockBean
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @MockBean
-    private JwtFilter jwtFilter;
 
     @MockBean
     private JwtUtil jwtUtil;

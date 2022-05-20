@@ -51,7 +51,7 @@ public class UploadedFileServiceImpl implements UploadedFileService {
     }
 
     /**
-     * Retrieve file by an Id
+     * Retrieve file by an id
      * @param id The id of the
      * @return A UploadedFile class
      */
