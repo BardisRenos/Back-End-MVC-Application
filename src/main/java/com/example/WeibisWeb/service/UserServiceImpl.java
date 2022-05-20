@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Cacheable(value = "Users")
     public List<UserDTO> getAllUsers() {
-        log.info("The method is called");
+        log.info("Retrieving all User entities from the database");
         return userRepository.findAll().stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
     }
 
@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Cacheable(value = "Users", key = "'UsersCache'+#id")
     public UserDTO getUserById(UUID id) throws UserNotFoundException {
+        log.info("Retrieving a User entity from the database by giving the id");
         return userRepository.findByUserId(id).map(UserMapper::convertAllUsersEntityToDTO).orElseThrow(()->new UserNotFoundException(String.format("The User was not found with ID: %s", id)));
     }
 
@@ -71,6 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Cacheable(value = "Users", key = "'UsersCache'+#lastName")
     public List<UserDTO> getUserByLastName(String lastName) {
+        log.info("Retrieving User(s) from the database by the last name");
         return userRepository.findByLastName(lastName).stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
     }
 
@@ -82,6 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Cacheable(value = "Users", key = "'UsersCache'+#firstName")
     public List<UserDTO> getUserByFirstName(String firstName) {
+        log.info("Retrieving User(s) from the database by the first name");
         return userRepository.findByFirstName(firstName).stream().map(UserMapper::convertAllUsersEntityToDTO).collect(Collectors.toList());
     }
 
@@ -92,6 +95,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     @Override
     public UserDTO getUserByEmail(String email) {
+        log.info("Retrieving a User from the database by the email");
         return userRepository.findByEmail(email).map(UserMapper::convertAllUsersEntityToDTO).orElseThrow(()-> new UsernameNotFoundException(String.format("The User was not found with the email: %s", email)));
     }
 
@@ -103,6 +107,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @CacheEvict(value = "users", allEntries = true)
     public UserNoPassDTO registerUser(UserDTO userDTO) {
+        log.info("Register a User into the database");
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = UserMapper.convertAllUsersDtoTOEntity(userDTO);
         user = userRepository.save(user);
@@ -117,6 +122,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("Loading the user name from the database");
         User user = userRepository.findByUsername(username);
         if (Objects.isNull(user)) {
             log.error("User not found in the database");
@@ -137,6 +143,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      */
     @Override
     public UserNoPassDTO replaceUser(UserNoPassDTO userNoPassDTO, UUID id) {
+        log.info("Replace/Update a User entity");
         User userEntity = UserMapper.convertUserNoPassDTOToEntity(userNoPassDTO);
 
         return userRepository.findByUserId(id).map(
@@ -162,7 +169,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return A String which indicates the entity id is deleted
      */
     @Override
-    public String deleteById(UUID id) throws UserNotFoundException {
+    public String deleteUserById(UUID id) throws UserNotFoundException {
+        log.info("Deleting a User entity from the database");
         User userRes = userRepository.findByUserId(id).filter(user -> user.getUserId().equals(id)).orElseThrow(()->new UserNotFoundException(String.format("The User was not found with ID: %s", id)));
         if (Objects.nonNull(userRes.getUserId())) {
             userRepository.deleteById(userRes.getUserId());

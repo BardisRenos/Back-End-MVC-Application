@@ -109,6 +109,8 @@ public class CandidateServiceImpl implements CandidateService {
      */
     @Override
     public CandidateDTO getReplaceCandidate(CandidateDTO candidateDTO, UUID id) {
+        log.info("Replace/Update a candidate entity from the database by giving the Entity in DTO format and an ID");
+
         Candidate candidateEntity = CandidateMapper.convertAllCandidateDTOtoEntity(candidateDTO);
 
         return candidateRepository.findByCandidateId(id).map(
@@ -136,6 +138,7 @@ public class CandidateServiceImpl implements CandidateService {
      */
     @Override
     public String deleteById(UUID id) throws CandidateNotFoundException {
+        log.info("Deleting a candidate from the database by giving an ID");
         Candidate candidateRes = candidateRepository.findByCandidateId(id).filter(candidate -> candidate.getCandidateId().equals(id)).orElseThrow(()-> new CandidateNotFoundException(String.format("The Candidate was not found with ID: %s", id)));
         if(Objects.nonNull(candidateRes.getCandidateId())) {
             candidateRepository.deleteById(candidateRes.getCandidateId());

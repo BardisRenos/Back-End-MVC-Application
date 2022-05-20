@@ -65,6 +65,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<ClientJobsDTO> getAllClientWithDescription() {
+        log.info("Getting all Clients with theirs Job Descriptions");
         return clientRepository.findAll().stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -76,6 +77,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Cacheable(value = "Clients", key = "'Clients'+#id")
     public ClientDTO getClientById(UUID id) throws ClientNotFoundException {
+        log.info("Getting a Client from the database by giving an ID");
         return clientRepository.findById(id).map(ClientMapper::convertAllClientEntityToDTO).orElseThrow(()-> new ClientNotFoundException(String.format("The Client was not found with ID: %s", id)));
     }
 
@@ -87,6 +89,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Cacheable(value = "Clients", key = "'Clients'+#companyName")
     public List<ClientDTO> getClientByName(String companyName) {
+        log.info("Getting Client(s) from the database by giving the company name");
         return clientRepository.findByCompanyName(companyName).stream().map(ClientMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -98,6 +101,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Cacheable(value = "Clients", key = "'Clients'+#city")
     public List<ClientDTO> getClientsByCity(String city) {
+        log.info("Getting Client(s) from the database by giving the city");
         return clientRepository.findByCity(city).stream().map(ClientMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -108,6 +112,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<ClientJobsDTO> getClientsByNameWithJobs(String companyName) {
+        log.info("Getting Clients with the job descriptions by the Client name");
         return clientRepository.findByCompanyNameAndJobName(companyName).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -119,6 +124,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<ClientJobsDTO> getClientsByNameAndLocation(String companyName, String location) {
+        log.info("Getting Clients with the job descriptions by the company name and location of the job");
         return clientRepository.findByCompanyNameAndLocation(companyName, location).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -130,6 +136,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<ClientJobsDTO> getClientsByNameAndProgrammingLanguage(String companyName, String programmingLanguage) {
+        log.info("Getting Clients with the job descriptions by the company name and the programming language");
         return clientRepository.findByCompanyNameAndProgrammingLanguage(companyName, programmingLanguage).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -142,6 +149,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<ClientJobsDTO> getClientsByNameAndProgrammingLanguageAndLocation(String companyName, String programmingLanguage, String location) {
+        log.info("Getting Clients with the job descriptions by the company name, programming language and location");
         return clientRepository.findByCompanyNameAndProgrammingLanguageAndLocation(companyName, programmingLanguage, location).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -153,6 +161,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public List<ClientJobsDTO> getClientsByNameAndStatus(String companyName, String status) {
+        log.info("Getting Clients with the job descriptions by the company name");
         return clientRepository.findByCompanyNameAndStatus(companyName, status).stream().map(ClientCandidateMapper::convertAllClientEntityToDTO).collect(Collectors.toList());
     }
 
@@ -164,6 +173,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public ClientDTO getReplaceClient(ClientDTO clientDTO, UUID id) {
+        log.info("Updating a Client entity by giving the client DTO entity and a ID");
         Client clientEntity = ClientMapper.convertAllClientDTOtoEntity(clientDTO);
 
         return clientRepository.findById(id).map(
@@ -191,6 +201,7 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public String deleteById(UUID id) throws ClientNotFoundException {
+        log.info("Deleting a Client entity by giving the ID");
         Client clientRes = clientRepository.findById(id).filter(client -> client.getClientId().equals(id)).orElseThrow(()-> new ClientNotFoundException(String.format("The Client was not found with ID: %s", id)));
         if(Objects.nonNull(clientRes.getClientId())) {
             clientRepository.deleteById(clientRes.getClientId());

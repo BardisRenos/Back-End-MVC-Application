@@ -136,7 +136,7 @@ public class UserController {
      */
     @DeleteMapping(value = "/user/{id}")
     public String deleteUser(@PathVariable(value = "id") UUID id) throws UserNotFoundException {
-        return userServiceImpl.deleteById(id);
+        return userServiceImpl.deleteUserById(id);
     }
 
 }

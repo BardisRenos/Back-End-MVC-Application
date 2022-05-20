@@ -72,7 +72,7 @@ public class CandidateController {
     /**
      * Retrieve the candidates by the nationality
      * @param lastName The last name of the Candidate
-     * @return A list of CandidateDTOs
+     * @return A list of CandidateDTO(s)
      */
     @GetMapping(value = "/candidates/lastName/{lastName}")
     @ResponseStatus(HttpStatus.OK)
@@ -83,7 +83,7 @@ public class CandidateController {
     /**
      * Retrieve the candidates by the first name
      * @param firstName The first name of the Candidate
-     * @return A list of CandidateDTOs
+     * @return A list of CandidateDTO(s)
      */
     @GetMapping(value = "/candidates/firstName/{firstName}")
     @ResponseStatus(HttpStatus.OK)
@@ -94,7 +94,7 @@ public class CandidateController {
     /**
      * Updating the candidate with new data by giving the id of the candidate
      * @param candidateDTO the candidate object
-     * @param id The id of the Candidate
+     * @param id The id of the Candidate entity
      * @return A CandidateDTO class
      */
     @PutMapping(value = "/candidate/{id}")
@@ -105,7 +105,7 @@ public class CandidateController {
 
     /**
      * Delete the candidate by giving the id
-     * @param id The id of the Candidate
+     * @param id The id of the Candidate entity
      */
     @DeleteMapping(value = "/candidate/{id}")
     @ResponseStatus(HttpStatus.OK)

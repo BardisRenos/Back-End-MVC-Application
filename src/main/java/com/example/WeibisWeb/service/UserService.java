@@ -18,6 +18,6 @@ public interface UserService {
     List<UserDTO> getUserByFirstName(String firstName);
     UserNoPassDTO registerUser(UserDTO userDTO);
     UserNoPassDTO replaceUser(UserNoPassDTO userNoPassDTO, UUID id) throws UserNotFoundException;
-    String deleteById(UUID id) throws UserNotFoundException;
+    String deleteUserById(UUID id) throws UserNotFoundException;
     UserDTO getUserByEmail(String email);
 }

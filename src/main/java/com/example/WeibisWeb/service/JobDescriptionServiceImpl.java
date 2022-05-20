@@ -94,6 +94,7 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
      * @return A list of JobDescriptionDTO
      */
     public List<JobDescriptionDTO> getJobsByLocation(String location) {
+        log.info("Getting the Job Description from the database by giving a location");
         return jobDescriptionRepository.findByLocation(location).stream().map(JobDescriptionMapper::convertAllJobDescriptionEntityToDTO).collect(Collectors.toList());
     }
 
@@ -112,11 +113,12 @@ public class JobDescriptionServiceImpl implements JobDescriptionService {
 
     /**
      * Retrieve Job Descriptions with Candidates by a given programming language
-     * @param lang The programming language
-     * @return A list of JobDescriptionCandidateDTO
+     * @param proLang The programming language
+     * @return A list of JobDescriptionCandidateDTO(s)
      */
-    public List<JobDescriptionCandidateDTO> getJobDescriptionWithCandidates(String lang) {
-        return jobDescriptionRepository.findByLocationAndCandidates(lang).stream().map(JobDescriptionCandidateMapper::convertAllJobDescriptionCandidateEntityToDTO).collect(Collectors.toList());
+    public List<JobDescriptionCandidateDTO> getJobDescriptionWithCandidates(String proLang) {
+        log.info("Getting Job Description with the Candidate by the programming language");
+        return jobDescriptionRepository.findByLocationAndCandidates(proLang).stream().map(JobDescriptionCandidateMapper::convertAllJobDescriptionCandidateEntityToDTO).collect(Collectors.toList());
     }
 
 }
