@@ -4,6 +4,7 @@ import com.example.WeibisWeb.resources.Candidate;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public interface CandidateRepository extends JpaRepository<Candidate, UUID> {
      * @return A list of Candidate Entities
      */
     @Query("select p from Candidate p where lower(p.lastName) like %:lastName%")
-    List<Candidate> findByLastName(String lastName);
+    List<Candidate> findByLastName(@Param("lastName") String lastName);
 
     /**
      * Retrieve the candidates by the first name
@@ -38,5 +39,5 @@ public interface CandidateRepository extends JpaRepository<Candidate, UUID> {
      * @return A list of Candidate Entities
      */
     @Query("select p from Candidate p where lower(p.name) like %:firstName%")
-    List<Candidate> findByName(String firstName);
+    List<Candidate> findByName(@Param("firstName") String firstName);
 }

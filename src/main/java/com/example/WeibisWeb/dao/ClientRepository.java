@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,7 +32,7 @@ public interface ClientRepository extends JpaRepository<Client, UUID> {
      * @return A List of Client Entity
      */
     @Query("select distinct p from Client p where lower(p.companyName) like %:companyName%")
-    List<Client> findByCompanyName(String companyName);
+    List<Client> findByCompanyName(@Param("companyName") String companyName);
 
     /**
      * Retrieve Clients by a given city
