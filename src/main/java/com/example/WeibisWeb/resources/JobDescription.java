@@ -67,6 +67,20 @@ public class JobDescription implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "candidate_id"))
     private List<Candidate> candidates;
 
+    /**
+     * The JobDescription constructor
+     * @param jobDescriptionsId The id of the JobDescription
+     * @param companyName The name of the JobDescription
+     * @param title The title of the JobDescription
+     * @param location The location of the JobDescription
+     * @param description The job description
+     * @param programmingLanguage The programming language of the JobDescription
+     * @param databaseName The database of the JobDescription
+     * @param framework The framework of the JobDescription
+     * @param level The level (junior, middle, senior) of the JobDescription
+     * @param isOpen The status of the JobDescription (if it is still open or taken)
+     * @param numberNeeded The total number of developers that is needed
+     */
     @SuppressWarnings("squid:S00107") // Too many parameters. Should be OK.
     public JobDescription(UUID jobDescriptionsId, String companyName, String title, String location, String description, String programmingLanguage, String databaseName, String framework, String level, String isOpen, Integer numberNeeded) {
         this.jobDescriptionsId = jobDescriptionsId;

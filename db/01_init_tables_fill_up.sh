@@ -21,7 +21,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
           address                 VARCHAR(256),
           city                    VARCHAR(64),
           country                 VARCHAR(64));
-      CREATE INDEX candidate_index ON candidates (candidate_id, );
+      CREATE INDEX candidate_index ON candidates (candidate_id, name, last_name);
 
       INSERT INTO candidates (candidate_id, name, last_name, dob, address, city) VALUES
           (uuid_generate_v4(), 'Renos', 'Bardis', '15/10/1987', '78 bd du president wilson', 'Antibes'),
@@ -38,6 +38,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
           city            VARCHAR(64),
           country         VARCHAR(64),
           company_size    INTEGER);
+      CREATE INDEX client_index ON clients (client_id, company_name, city);
 
       INSERT INTO clients (client_id, company_name, sector, city, country, company_size) VALUES
           (uuid_generate_v4(), 'Atos', 'It Consultancy', 'Paris', 'France', 10000),
