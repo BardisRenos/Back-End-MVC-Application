@@ -16,9 +16,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * Adding swagger 2 layer
  */
+@EnableWebMvc
 @Configuration
 @EnableSwagger2
-@EnableWebMvc
 public class SwaggerConfig implements WebMvcConfigurer {
 
     @Override
