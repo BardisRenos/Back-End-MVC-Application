@@ -14,7 +14,7 @@ public class LoggingAdviceController {
 
     Logger log = LoggerFactory.getLogger(LoggingAdviceController.class);
 
-    @Pointcut("execution(* com.Weibis.demo.controller.*.*(..))")
+    @Pointcut("execution(* com.example.WeibisWeb.demo.controller.*.*(..))")
     public void myPointCut() {
 
     }

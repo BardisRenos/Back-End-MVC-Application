@@ -285,9 +285,9 @@ class CandidateControllerTest {
         when(jwtUtil.generateToken(userLogin)).thenReturn("Bearer " + tokenString);
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/1.0/candidates/lastName/{lastName}", "Bardis")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .header("Authorization", "Bearer " + tokenString)
-                        .content(om.writeValueAsString(candidateDTOList)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer " + tokenString)
+                .content(om.writeValueAsString(candidateDTOList)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[*]", hasSize(candidateDTOList.size())))

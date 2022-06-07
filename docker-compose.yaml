@@ -48,6 +48,7 @@ services:
       - redis-cache
     ports:
       - "8081:8081"
+    restart: always
     healthcheck:
       test: [ "CMD-SHELL"]
       interval: 10s
