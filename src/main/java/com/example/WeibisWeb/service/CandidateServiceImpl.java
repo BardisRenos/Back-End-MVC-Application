@@ -42,7 +42,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     /**
-     * Retrieve all Candidates by a given ID
+     * Retrieve all Candidates
      * @return A list of CandidatesDTOs
      */
     @Override
