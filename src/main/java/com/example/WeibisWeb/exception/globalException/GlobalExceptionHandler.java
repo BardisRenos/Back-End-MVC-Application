@@ -1,5 +1,6 @@
-package com.example.WeibisWeb.exception;
+package com.example.WeibisWeb.exception.globalException;
 
+import com.example.WeibisWeb.exception.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

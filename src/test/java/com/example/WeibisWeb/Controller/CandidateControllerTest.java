@@ -2,10 +2,8 @@ package com.example.WeibisWeb.Controller;//package controllerTest;
 
 import com.example.WeibisWeb.controller.CandidateController;
 import com.example.WeibisWeb.dao.CandidateRepository;
-import com.example.WeibisWeb.dao.ClientRepository;
 import com.example.WeibisWeb.dto.CandidateDTO;
 import com.example.WeibisWeb.security.JwtAuthEntrypoint;
-import com.example.WeibisWeb.security.JwtFilter;
 import com.example.WeibisWeb.security.JwtUtil;
 import com.example.WeibisWeb.service.CandidateServiceImpl;
 import com.example.WeibisWeb.service.UserServiceImpl;
