@@ -7,14 +7,14 @@ pipeline {
                 echo 'Hello World'
             }
         }
-        stage("Build"){
+        stage('Build'){
             steps {
-                sh "./mvn clean install"
+                sh './mvnw clean install'
             }
         }
-        stage("Tests"){
+        stage('Tests'){
             steps {
-                sh "./mvn test"
+                sh './mvnw test'
             }
         }
     }
