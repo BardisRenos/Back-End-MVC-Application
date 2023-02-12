@@ -116,6 +116,7 @@ class CandidateControllerTest {
         assertNotNull(candidateDTORes);
         assertEquals("Renos", candidateDTORes.getName());
         assertEquals("Bardis", candidateDTORes.getLastName());
+
     }
 
     @Test
@@ -308,6 +309,4 @@ class CandidateControllerTest {
         assertEquals("Nikos", myObjectsRes.get(1).getName());
         assertEquals("Bardis", myObjectsRes.get(1).getLastName());
     }
-
-
 }
